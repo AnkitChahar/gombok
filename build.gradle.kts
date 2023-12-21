@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.vicotorcooperlol"
-version = "1.0-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -16,7 +16,6 @@ intellij {
     version.set("2022.1.4")
     type.set("GO") // Target IDE Platform
 
-//    plugins.set(listOf(/* Plugin Dependencies */))
     plugins.set(listOf("org.jetbrains.plugins.go"))
 }
 
