@@ -61,9 +61,10 @@ public class GenerateGetterSetterAction extends AnAction {
             List<String> structNameList = new ArrayList<>(structName2Fields.keySet());
             PsiFileUtils.getStructAllGetterSetterTextRange(e, structNameList)
                     .forEach(range -> doc.deleteString(range.getStartOffset(), range.getEndOffset()));
-            this.formatGoFile(e);
 
             doc.insertString(doc.getTextLength(), "\n" + StringUtils.join(outputs.toArray()));
+            PsiDocumentManager.getInstance(project).commitDocument(doc);
+
             this.formatGoFile(e);
         });
     }
@@ -102,6 +103,6 @@ public class GenerateGetterSetterAction extends AnAction {
             return;
         }
         CodeStyleManager styleManager = CodeStyleManager.getInstance(project);
-        styleManager.reformat(psiFile, true);
+        styleManager.reformat(psiFile, false);
     }
 }
