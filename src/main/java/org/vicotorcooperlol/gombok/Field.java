@@ -13,41 +13,45 @@ public class Field {
     }
 
     public String toGetter(String structName) {
-        return String.format("func (receiver *%s) Get%s() (v %s) {\n" +
-                "   if receiver == nil {\n" +
-                "       return v\n" +
+        String receiver = structName.substring(0, 1).toLowerCase();
+        return String.format("func (%s *%s) Get%s() (out %s) {\n" +
+                "   if %s == nil {\n" +
+                "       return out\n" +
                 "   }\n" +
-                "   return receiver.%s\n" +
-                "}\n", structName, StringUtils.capitalize(this.name), this.type, this.name);
+                "   return %s.%s\n" +
+                "}\n", receiver, structName, StringUtils.capitalize(this.name), this.type, receiver, receiver, this.name);
     }
 
     public String toGetterNonPointer(String structName) {
-        return String.format("func (receiver *%s) Get%sNonPointer() (v %s) {\n" +
-                        "   if receiver == nil || receiver.%s == nil {\n" +
-                        "       return v\n" +
+        String receiver = structName.substring(0, 1).toLowerCase();
+        return String.format("func (%s *%s) Get%sNonPointer() (out %s) {\n" +
+                        "   if %s == nil || %s.%s == nil {\n" +
+                        "       return out\n" +
                         "   }\n" +
-                        "   return *receiver.%s\n" +
-                        "}\n", structName, StringUtils.capitalize(this.name),
-                StringUtils.removeStart(this.type, Constants.Pointer), this.name, this.name);
+                        "   return *%s.%s\n" +
+                        "}\n", receiver, structName, StringUtils.capitalize(this.name),
+                StringUtils.removeStart(this.type, Constants.Pointer), receiver, receiver, this.name, receiver, this.name);
     }
 
     public String toSetter(String structName) {
-        return String.format("func (receiver *%s) Set%s(v %s) {\n" +
-                "   if receiver == nil {\n" +
+        String receiver = structName.substring(0, 1).toLowerCase();
+        return String.format("func (%s *%s) Set%s(out %s) {\n" +
+                "   if %s == nil {\n" +
                 "       return\n" +
                 "   }\n" +
-                "   receiver.%s = v\n" +
-                "}\n", structName, StringUtils.capitalize(this.name), this.type, this.name);
+                "   %s.%s = out\n" +
+                "}\n", receiver, structName, StringUtils.capitalize(this.name), this.type, receiver, receiver, this.name);
     }
 
     public String toSetterNonPointer(String structName) {
-        return String.format("func (receiver *%s) Set%sNonPointer(v %s) {\n" +
-                        "   if receiver == nil {\n" +
+        String receiver = structName.substring(0, 1).toLowerCase();
+        return String.format("func (%s *%s) Set%sNonPointer(out %s) {\n" +
+                        "   if %s == nil {\n" +
                         "       return\n" +
                         "   }\n" +
-                        "   receiver.%s = &v\n" +
-                        "}\n", structName, StringUtils.capitalize(this.name),
-                StringUtils.removeStart(this.type, Constants.Pointer), this.name);
+                        "   %s.%s = &out\n" +
+                        "}\n", receiver, structName, StringUtils.capitalize(this.name),
+                StringUtils.removeStart(this.type, Constants.Pointer), receiver, receiver, this.name);
     }
 
     public String toOutput(String structName) {
