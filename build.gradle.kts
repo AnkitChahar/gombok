@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.vicotorcooperlol"
-version = "1.0.1"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("221")
-        untilBuild.set("231.*")
+        untilBuild.set("243.*")
     }
 
     signPlugin {
